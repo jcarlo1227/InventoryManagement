@@ -195,6 +195,138 @@
       min-width: 100px;
     }
 
+    /* Top Navigation */
+    .top-navbar {
+      background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+      border-bottom: 1px solid var(--border-color);
+      padding: 0.75rem 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 1030;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .top-navbar .navbar-brand {
+      font-weight: bold;
+      color: var(--primary-color);
+      font-size: 1.25rem;
+    }
+
+    .top-navbar .navbar-nav .nav-link {
+      color: #495057;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+
+    .top-navbar .navbar-nav .nav-link:hover {
+      background-color: #f8f9fa;
+      color: var(--primary-color);
+    }
+
+    .notification-badge {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      background-color: var(--danger-color);
+      color: white;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      font-size: 0.7rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+    }
+
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 0.875rem;
+    }
+
+    .dropdown-menu {
+      border: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      border-radius: 8px;
+      padding: 0.5rem 0;
+      min-width: 200px;
+    }
+
+    .dropdown-item {
+      padding: 0.75rem 1.25rem;
+      font-size: 0.875rem;
+      transition: all 0.3s ease;
+    }
+
+    .dropdown-item:hover {
+      background-color: #f8f9fa;
+      color: var(--primary-color);
+    }
+
+    .dropdown-divider {
+      margin: 0.5rem 0;
+    }
+
+    .notification-item {
+      padding: 0.75rem 1.25rem;
+      border-bottom: 1px solid #f1f1f1;
+      transition: all 0.3s ease;
+    }
+
+    .notification-item:hover {
+      background-color: #f8f9fa;
+    }
+
+    .notification-item:last-child {
+      border-bottom: none;
+    }
+
+    .notification-title {
+      font-weight: 600;
+      font-size: 0.875rem;
+      color: #495057;
+      margin-bottom: 0.25rem;
+    }
+
+    .notification-text {
+      font-size: 0.75rem;
+      color: #6c757d;
+      margin-bottom: 0.25rem;
+    }
+
+    .notification-time {
+      font-size: 0.7rem;
+      color: #adb5bd;
+    }
+
+    .notification-unread {
+      background-color: #e3f2fd;
+      border-left: 3px solid var(--primary-color);
+    }
+
+    /* Responsive adjustments for top nav */
+    @media (max-width: 992px) {
+      .top-navbar {
+        padding: 0.5rem 1rem;
+      }
+      
+      .user-avatar {
+        width: 28px;
+        height: 28px;
+        font-size: 0.8rem;
+      }
+    }
+
     @media (max-width: 768px) {
       .action-buttons {
         flex-direction: column;
@@ -209,17 +341,131 @@
   </style>
 </head>
 <body>
+<!-- Top Navigation -->
+<nav class="navbar navbar-expand-lg top-navbar">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <i class="bi bi-boxes me-2"></i>Fox Control Hub
+    </a>
+
+    <!-- Right side navigation -->
+    <div class="navbar-nav ms-auto d-flex flex-row align-items-center">
+      <!-- Search (hidden on mobile) -->
+      <div class="nav-item me-3 d-none d-lg-block">
+        <div class="input-group" style="width: 250px;">
+          <input type="text" class="form-control form-control-sm" placeholder="Quick search..." id="topSearchInput">
+          <button class="btn btn-outline-secondary btn-sm" type="button">
+            <i class="bi bi-search"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Notifications -->
+      <div class="nav-item dropdown me-3">
+        <a class="nav-link position-relative" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="bi bi-bell fs-5"></i>
+          <span class="notification-badge" id="notificationCount">2</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown" style="width: 320px;">
+          <div class="d-flex justify-content-between align-items-center px-3 py-2 border-bottom">
+            <h6 class="mb-0">Notifications</h6>
+            <button class="btn btn-sm btn-link text-primary p-0" onclick="markAllAsRead()">Mark all as read</button>
+          </div>
+          <div class="notification-list" style="max-height: 300px; overflow-y: auto;">
+            <div class="notification-item notification-unread" data-id="1">
+              <div class="notification-title">Barcode Scanned</div>
+              <div class="notification-text">New item scanned: Product ABC123</div>
+              <div class="notification-time">5 minutes ago</div>
+            </div>
+            <div class="notification-item notification-unread" data-id="2">
+              <div class="notification-title">RFID Tag Detected</div>
+              <div class="notification-text">RFID tag read successfully: RF456789</div>
+              <div class="notification-time">15 minutes ago</div>
+            </div>
+          </div>
+          <div class="text-center py-2 border-top">
+            <a href="#" class="btn btn-sm btn-link">View all notifications</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Messages -->
+      <div class="nav-item dropdown me-3">
+        <a class="nav-link position-relative" href="#" id="messageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="bi bi-chat-dots fs-5"></i>
+          <span class="notification-badge" style="background-color: var(--success-color);">1</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="messageDropdown" style="width: 300px;">
+          <div class="d-flex justify-content-between align-items-center px-3 py-2 border-bottom">
+            <h6 class="mb-0">Messages</h6>
+            <a href="#" class="btn btn-sm btn-link text-primary p-0">View all</a>
+          </div>
+          <div class="notification-list" style="max-height: 250px; overflow-y: auto;">
+            <div class="notification-item">
+              <div class="d-flex align-items-center">
+                <div class="user-avatar me-2" style="width: 24px; height: 24px; font-size: 0.7rem;">WM</div>
+                <div class="flex-grow-1">
+                  <div class="notification-title">Warehouse Manager</div>
+                  <div class="notification-text">Scanner calibration completed successfully</div>
+                  <div class="notification-time">1 hour ago</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- User Profile -->
+      <div class="nav-item dropdown">
+        <a class="nav-link d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <div class="user-avatar me-2">JD</div>
+          <div class="d-none d-md-block">
+            <div style="font-size: 0.875rem; font-weight: 600; line-height: 1.2;">John Doe</div>
+            <div style="font-size: 0.75rem; color: #6c757d; line-height: 1.2;">Scanner Operator</div>
+          </div>
+          <i class="bi bi-chevron-down ms-2"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+          <div class="px-3 py-2 border-bottom">
+            <div class="fw-bold">John Doe</div>
+            <div class="text-muted small">john.doe@company.com</div>
+          </div>
+          <a class="dropdown-item" href="#" onclick="showProfileModal()">
+            <i class="bi bi-person me-2"></i>My Profile
+          </a>
+          <a class="dropdown-item" href="#" onclick="showSettingsModal()">
+            <i class="bi bi-gear me-2"></i>Settings
+          </a>
+          <a class="dropdown-item" href="#">
+            <i class="bi bi-question-circle me-2"></i>Help & Support
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#" onclick="showActivityLog()">
+            <i class="bi bi-clock-history me-2"></i>Activity Log
+          </a>
+          <a class="dropdown-item" href="#">
+            <i class="bi bi-shield-check me-2"></i>Security
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item text-danger" href="#" onclick="logout()">
+            <i class="bi bi-box-arrow-right me-2"></i>Sign Out
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
 <div class="container-fluid">
   <div class="row">
     <!-- Sidebar -->
-    <div class="col-md-2 sidebar p-4">
-      <h5 class="mb-4 fw-bold">Fox Control Hub</h5>
+    <div class="col-lg-2 col-md-3 sidebar p-4">
       <nav class="nav flex-column">
-        <a class="nav-link" href="#"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
-        <a class="nav-link" href="#"><i class="bi bi-box-seam me-2"></i>Inventory</a>
+        <a class="nav-link" href="Inventory.html"><i class="bi bi-box-seam me-2"></i>Inventory</a>
         <a class="nav-link active" href="#"><i class="bi bi-upc-scan me-2"></i>Barcode</a>
-        <a class="nav-link" href="#"><i class="bi bi-layout-text-window-reverse me-2"></i>Layout & Optimization</a>
-        <a class="nav-link" href="#"><i class="bi bi-truck me-2"></i>Shipments</a>
+        <a class="nav-link" href="#"><i class="bi bi-layout-wtf me-2"></i>Layout & Optimization</a>
+        <a class="nav-link" href="MaterialShipments.html"><i class="bi bi-truck me-2"></i>Material Shipments</a>
+        <a class="nav-link" href="OrderShipments.html"><i class="bi bi-box-arrow-right me-2"></i>Order Shipments</a>
         <a class="nav-link" href="#"><i class="bi bi-shop me-2"></i>Sales Channel's</a>
         <a class="nav-link" href="#"><i class="bi bi-graph-up me-2"></i>Reports</a>
         <a class="nav-link" href="#"><i class="bi bi-bell me-2"></i>Notifications</a>
@@ -227,10 +473,16 @@
     </div>
 
     <!-- Main Content -->
-    <div class="col-md-10 p-4">
-      <!-- Top Panel -->
+    <div class="col-lg-10 col-md-9 p-4">
+      <!-- Top Action Panel -->
       <div class="top-panel">
-        <h4 class="fw-bold">Barcode/RFID Scanner</h4>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h4 class="fw-bold mb-0">Barcode/RFID Scanner</h4>
+          <div class="text-muted">
+            <i class="bi bi-calendar-event me-1"></i>
+            <span id="currentDate"></span>
+          </div>
+        </div>
         <div class="d-flex flex-wrap justify-content-start action-buttons">
           <button class="btn" onclick="startBarcodeScanner()">
             <i class="bi bi-upc-scan"></i>Start Barcode Scanner
@@ -243,6 +495,9 @@
           </button>
           <button class="btn" onclick="clearScanHistory()">
             <i class="bi bi-trash"></i>Clear History
+          </button>
+          <button class="btn" onclick="calibrateScanner()">
+            <i class="bi bi-tools"></i>Calibrate Scanner
           </button>
         </div>
       </div>
@@ -320,7 +575,19 @@ let continuousMode = false;
 document.addEventListener('DOMContentLoaded', function() {
   updateScanCount();
   focusInput();
+  updateCurrentDate();
 });
+
+function updateCurrentDate() {
+  const now = new Date();
+  const options = { 
+    weekday: 'long', 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric' 
+  };
+  document.getElementById('currentDate').textContent = now.toLocaleDateString('en-US', options);
+}
 
 function startBarcodeScanner() {
   scannerMode = 'barcode';
@@ -571,6 +838,10 @@ function clearScanHistory() {
   }
 }
 
+function calibrateScanner() {
+  alert('Scanner calibration started...\n\nThis would typically:\n• Test scanner hardware\n• Adjust sensitivity settings\n• Verify barcode/RFID reading accuracy\n• Update firmware if needed');
+}
+
 function focusInput() {
   setTimeout(() => {
     document.getElementById('manualInput').focus();
@@ -579,21 +850,52 @@ function focusInput() {
 
 function playBeep() {
   // Create a simple beep sound
-  const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-  const oscillator = audioContext.createOscillator();
-  const gainNode = audioContext.createGain();
-  
-  oscillator.connect(gainNode);
-  gainNode.connect(audioContext.destination);
-  
-  oscillator.frequency.value = 800;
-  oscillator.type = 'square';
-  
-  gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-  gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
-  
-  oscillator.start(audioContext.currentTime);
-  oscillator.stop(audioContext.currentTime + 0.1);
+  try {
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    oscillator.frequency.value = 800;
+    oscillator.type = 'square';
+    
+    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+    
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.1);
+  } catch (e) {
+    // Audio context not supported or blocked
+    console.log('Audio feedback not available');
+  }
+}
+
+// Top navigation functions
+function markAllAsRead() {
+  document.querySelectorAll('.notification-unread').forEach(item => {
+    item.classList.remove('notification-unread');
+  });
+  document.getElementById('notificationCount').textContent = '0';
+}
+
+function showProfileModal() {
+  alert('Profile modal would open here');
+}
+
+function showSettingsModal() {
+  alert('Settings modal would open here');
+}
+
+function showActivityLog() {
+  alert('Activity log would open here');
+}
+
+function logout() {
+  if (confirm('Are you sure you want to sign out?')) {
+    alert('Logging out...');
+  }
 }
 
 // Auto-focus input when page becomes visible
