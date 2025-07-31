@@ -678,6 +678,7 @@
                   <td>2024-01-15</td>
                   <td class="item-actions">
                     <i class="bi bi-star" title="Favorite" onclick="toggleFavorite(1)"></i>
+                    <i class="bi bi-truck" title="View Shipments" onclick="viewShipments('ITM001')"></i>
                     <i class="bi bi-pencil" title="Edit" onclick="editItem(1)"></i>
                     <i class="bi bi-trash" title="Delete" onclick="deleteItem(1)"></i>
                   </td>
@@ -698,6 +699,7 @@
                   <td>2024-01-14</td>
                   <td class="item-actions">
                     <i class="bi bi-star" title="Favorite" onclick="toggleFavorite(2)"></i>
+                    <i class="bi bi-truck" title="View Shipments" onclick="viewShipments('ITM002')"></i>
                     <i class="bi bi-pencil" title="Edit" onclick="editItem(2)"></i>
                     <i class="bi bi-trash" title="Delete" onclick="deleteItem(2)"></i>
                   </td>
@@ -1198,6 +1200,23 @@ function toggleFavorite(id) {
   const icon = event.target;
   icon.classList.toggle('bi-star');
   icon.classList.toggle('bi-star-fill');
+}
+
+function viewShipments(itemCode) {
+  const shipmentWindows = [];
+  
+  // Open material shipments filtered for this item
+  const materialWindow = window.open('material_shipments.html?item=' + itemCode, '_blank');
+  shipmentWindows.push(materialWindow);
+  
+  // Open order shipments filtered for this item
+  setTimeout(() => {
+    const orderWindow = window.open('order_shipments.html?item=' + itemCode, '_blank');
+    shipmentWindows.push(orderWindow);
+  }, 500);
+  
+  // Show a summary alert
+  alert('Opening shipment records for ' + itemCode + '...\nCheck the opened tabs for material and order shipments.');
 }
 
 function generateBarcode() {

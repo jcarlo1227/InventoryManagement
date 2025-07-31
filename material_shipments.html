@@ -520,6 +520,10 @@
             <i class="bi bi-geo-alt"></i>
             Track Shipment
           </button>
+          <button class="btn" onclick="viewInventoryImpact()">
+            <i class="bi bi-box-seam"></i>
+            Inventory Impact
+          </button>
         </div>
       </div>
 
@@ -575,7 +579,7 @@
         <div class="d-flex justify-content-between align-items-center mb-3">
           <h5><i class="bi bi-truck me-2"></i>Material Shipment Records</h5>
           <div class="text-muted">
-            <small>Total Records: <span id="totalRecords">1</span></small>
+            <small>Total Records: <span id="totalRecords">3</span></small>
           </div>
         </div>
         <div class="table-container">
@@ -601,12 +605,17 @@
               <tbody>
                 <tr>
                   <td><strong>MAT-0001</strong></td>
-                  <td>Aluminum Sheets</td>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <span>Aluminum Sheets</span>
+                      <small class="text-muted ms-2">(Raw Material)</small>
+                    </div>
+                  </td>
                   <td>100</td>
                   <td>kg</td>
                   <td><span class="badge bg-primary">Inbound</span></td>
                   <td>Supplier XYZ</td>
-                  <td>Main Warehouse</td>
+                  <td>Main Warehouse (WH001)</td>
                   <td><span class="status-badge status-delivered">Delivered</span></td>
                   <td>2025-07-28</td>
                   <td>2025-07-30</td>
@@ -614,8 +623,59 @@
                   <td>Jane Dela Cruz</td>
                   <td class="item-actions">
                     <i class="bi bi-eye" title="View Details" onclick="viewShipment('MAT-0001')"></i>
+                    <i class="bi bi-box-seam" title="View in Inventory" onclick="viewInInventory('MAT-0001')"></i>
                     <i class="bi bi-pencil" title="Edit" onclick="editShipment('MAT-0001')"></i>
                     <i class="bi bi-trash" title="Delete" onclick="deleteShipment('MAT-0001')"></i>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>MAT-0002</strong></td>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <span>USB Cable</span>
+                      <small class="text-muted ms-2">(ITM002)</small>
+                    </div>
+                  </td>
+                  <td>50</td>
+                  <td>pcs</td>
+                  <td><span class="badge bg-success">Inbound</span></td>
+                  <td>Tech Supplier Co.</td>
+                  <td>Main Warehouse (WH002)</td>
+                  <td><span class="status-badge status-shipped">Shipped</span></td>
+                  <td>2025-01-14</td>
+                  <td>2025-01-16</td>
+                  <td>-</td>
+                  <td>Supply Manager</td>
+                  <td class="item-actions">
+                    <i class="bi bi-eye" title="View Details" onclick="viewShipment('MAT-0002')"></i>
+                    <i class="bi bi-box-seam" title="View in Inventory" onclick="viewInInventory('ITM002')"></i>
+                    <i class="bi bi-pencil" title="Edit" onclick="editShipment('MAT-0002')"></i>
+                    <i class="bi bi-trash" title="Delete" onclick="deleteShipment('MAT-0002')"></i>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>MAT-0003</strong></td>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <span>Wireless Earphone</span>
+                      <small class="text-muted ms-2">(ITM001)</small>
+                    </div>
+                  </td>
+                  <td>25</td>
+                  <td>pcs</td>
+                  <td><span class="badge bg-warning text-dark">Outbound</span></td>
+                  <td>WH001</td>
+                  <td>Customer Fulfillment</td>
+                  <td><span class="status-badge status-processing">Processing</span></td>
+                  <td>-</td>
+                  <td>2025-01-17</td>
+                  <td>-</td>
+                  <td>Warehouse Staff</td>
+                  <td class="item-actions">
+                    <i class="bi bi-eye" title="View Details" onclick="viewShipment('MAT-0003')"></i>
+                    <i class="bi bi-box-seam" title="View in Inventory" onclick="viewInInventory('ITM001')"></i>
+                    <i class="bi bi-pencil" title="Edit" onclick="editShipment('MAT-0003')"></i>
+                    <i class="bi bi-trash" title="Delete" onclick="deleteShipment('MAT-0003')"></i>
                   </td>
                 </tr>
               </tbody>
@@ -630,7 +690,7 @@
           <div class="card border-0 shadow-sm">
             <div class="card-body text-center">
               <i class="bi bi-truck text-primary fs-1"></i>
-              <h4 class="mt-2">1</h4>
+              <h4 class="mt-2">3</h4>
               <p class="text-muted mb-0">Total Shipments</p>
             </div>
           </div>
@@ -648,17 +708,83 @@
           <div class="card border-0 shadow-sm">
             <div class="card-body text-center">
               <i class="bi bi-clock text-warning fs-1"></i>
-              <h4 class="mt-2">0</h4>
-              <p class="text-muted mb-0">Pending</p>
+              <h4 class="mt-2">2</h4>
+              <p class="text-muted mb-0">In Transit</p>
             </div>
           </div>
         </div>
         <div class="col-md-3">
           <div class="card border-0 shadow-sm">
             <div class="card-body text-center">
-              <i class="bi bi-exclamation-triangle text-danger fs-1"></i>
-              <h4 class="mt-2">0</h4>
-              <p class="text-muted mb-0">Delayed</p>
+              <i class="bi bi-box-arrow-right text-info fs-1"></i>
+              <h4 class="mt-2">2</h4>
+              <p class="text-muted mb-0">Inbound</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Inventory Impact Section -->
+      <div class="row mt-4">
+        <div class="col-12">
+          <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white">
+              <div class="d-flex justify-content-between align-items-center">
+                <h6 class="mb-0 fw-bold"><i class="bi bi-box-seam me-2"></i>Inventory Impact Summary</h6>
+                <button class="btn btn-sm btn-outline-primary" onclick="refreshInventoryImpact()">
+                  <i class="bi bi-arrow-clockwise me-1"></i>Refresh
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="text-center p-3 border rounded">
+                    <i class="bi bi-arrow-up-circle text-success fs-2"></i>
+                    <h5 class="mt-2">Inbound Items</h5>
+                    <p class="text-muted mb-1">Expected to increase inventory</p>
+                    <div class="fw-bold">
+                      <span class="text-success">+175 units</span>
+                    </div>
+                    <small class="text-muted">USB Cable (+50), Aluminum Sheets (+100), Other (+25)</small>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="text-center p-3 border rounded">
+                    <i class="bi bi-arrow-down-circle text-warning fs-2"></i>
+                    <h5 class="mt-2">Outbound Items</h5>
+                    <p class="text-muted mb-1">Will decrease inventory</p>
+                    <div class="fw-bold">
+                      <span class="text-warning">-25 units</span>
+                    </div>
+                    <small class="text-muted">Wireless Earphone (-25)</small>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="text-center p-3 border rounded">
+                    <i class="bi bi-calculator text-info fs-2"></i>
+                    <h5 class="mt-2">Net Impact</h5>
+                    <p class="text-muted mb-1">Overall inventory change</p>
+                    <div class="fw-bold">
+                      <span class="text-success">+150 units</span>
+                    </div>
+                    <small class="text-muted">Positive inventory growth</small>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-3">
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="fw-bold">Quick Actions:</span>
+                  <div>
+                    <button class="btn btn-sm btn-outline-primary me-2" onclick="window.open('Inventory_Master_Data.html', '_blank')">
+                      <i class="bi bi-box-seam me-1"></i>View Full Inventory
+                    </button>
+                    <button class="btn btn-sm btn-outline-success" onclick="window.open('material_shipments.html?filter=inbound', '_self')">
+                      <i class="bi bi-arrow-up me-1"></i>View Inbound Only
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -703,6 +829,11 @@
     }
   }
 
+  function viewInInventory(itemCode) {
+    // Redirect to inventory master data with the specific item highlighted
+    window.open('Inventory_Master_Data.html?highlight=' + itemCode, '_blank');
+  }
+
   function applyFilters() {
     const searchTerm = document.getElementById('searchShipment').value;
     const status = document.getElementById('statusFilter').value;
@@ -718,6 +849,16 @@
     // Real-time search functionality would be implemented here
     console.log('Searching for:', e.target.value);
   });
+
+  function viewInventoryImpact() {
+    // Scroll to inventory impact section
+    document.querySelector('.card-header h6').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function refreshInventoryImpact() {
+    alert('Inventory impact data refreshed');
+    // In a real application, this would fetch updated data from the server
+  }
 </script>
 </body>
 </html>

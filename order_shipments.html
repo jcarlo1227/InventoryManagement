@@ -555,6 +555,10 @@
             <i class="bi bi-file-earmark-text"></i>
             Reports
           </button>
+          <button class="btn" onclick="viewInventoryImpact()">
+            <i class="bi bi-box-seam"></i>
+            Inventory Impact
+          </button>
         </div>
       </div>
 
@@ -638,9 +642,15 @@
                 <tr>
                   <td><strong>ORD-0001</strong></td>
                   <td>John Smith</td>
-                  <td>Wireless Earphones</td>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <span>Wireless Earphone</span>
+                      <small class="text-muted ms-2">(ITM001)</small>
+                    </div>
+                    <small class="text-info">Stock: 15 available</small>
+                  </td>
                   <td>2</td>
-                  <td>₱500.00</td>
+                  <td>₱700.00</td>
                   <td><span class="status-badge priority-high">High</span></td>
                   <td><span class="status-badge status-delivered">Delivered</span></td>
                   <td>2025-01-10</td>
@@ -649,6 +659,7 @@
                   <td>TRK001234567</td>
                   <td class="item-actions">
                     <i class="bi bi-eye" title="View Details" onclick="viewOrder('ORD-0001')"></i>
+                    <i class="bi bi-box-seam" title="View in Inventory" onclick="viewInInventory('ITM001')"></i>
                     <i class="bi bi-truck" title="Track" onclick="trackOrder('ORD-0001')"></i>
                     <i class="bi bi-printer" title="Print Label" onclick="printLabel('ORD-0001')"></i>
                   </td>
@@ -656,9 +667,15 @@
                 <tr>
                   <td><strong>ORD-0002</strong></td>
                   <td>Maria Garcia</td>
-                  <td>Bluetooth Speaker</td>
-                  <td>1</td>
-                  <td>₱1,200.00</td>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <span>USB Cable</span>
+                      <small class="text-muted ms-2">(ITM002)</small>
+                    </div>
+                    <small class="text-warning">Stock: 8 remaining</small>
+                  </td>
+                  <td>3</td>
+                  <td>₱225.00</td>
                   <td><span class="status-badge priority-medium">Medium</span></td>
                   <td><span class="status-badge status-shipped">Shipped</span></td>
                   <td>2025-01-12</td>
@@ -667,6 +684,7 @@
                   <td>TRK001234568</td>
                   <td class="item-actions">
                     <i class="bi bi-eye" title="View Details" onclick="viewOrder('ORD-0002')"></i>
+                    <i class="bi bi-box-seam" title="View in Inventory" onclick="viewInInventory('ITM002')"></i>
                     <i class="bi bi-truck" title="Track" onclick="trackOrder('ORD-0002')"></i>
                     <i class="bi bi-printer" title="Print Label" onclick="printLabel('ORD-0002')"></i>
                   </td>
@@ -674,9 +692,15 @@
                 <tr>
                   <td><strong>ORD-0003</strong></td>
                   <td>Carlos Rodriguez</td>
-                  <td>Phone Case</td>
-                  <td>3</td>
-                  <td>₱450.00</td>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <span>Wireless Earphone</span>
+                      <small class="text-muted ms-2">(ITM001)</small>
+                    </div>
+                    <small class="text-info">Stock: 15 available</small>
+                  </td>
+                  <td>1</td>
+                  <td>₱350.00</td>
                   <td><span class="status-badge priority-low">Low</span></td>
                   <td><span class="status-badge status-processing">Processing</span></td>
                   <td>2025-01-14</td>
@@ -685,6 +709,7 @@
                   <td>-</td>
                   <td class="item-actions">
                     <i class="bi bi-eye" title="View Details" onclick="viewOrder('ORD-0003')"></i>
+                    <i class="bi bi-box-seam" title="View in Inventory" onclick="viewInInventory('ITM001')"></i>
                     <i class="bi bi-pencil" title="Edit" onclick="editOrder('ORD-0003')"></i>
                     <i class="bi bi-box-arrow-right" title="Ship Now" onclick="shipOrder('ORD-0003')"></i>
                   </td>
@@ -822,6 +847,11 @@
     alert('Print shipping label for order: ' + id);
   }
 
+  function viewInInventory(itemCode) {
+    // Redirect to inventory master data with the specific item highlighted
+    window.open('Inventory_Master_Data.html?highlight=' + itemCode, '_blank');
+  }
+
   function applyOrderFilters() {
     const searchTerm = document.getElementById('searchOrder').value;
     const status = document.getElementById('orderStatusFilter').value;
@@ -837,6 +867,10 @@
     // Real-time search functionality would be implemented here
     console.log('Searching for:', e.target.value);
   });
+
+  function viewInventoryImpact() {
+    alert('Inventory Impact: Orders will reduce inventory by 6 units total (2x Wireless Earphone, 3x USB Cable, 1x Wireless Earphone)');
+  }
 </script>
 </body>
 </html>
