@@ -49,6 +49,11 @@ const initializeDatabase = async () => {
     } else {
       console.log('✅ Admin user already exists');
     }
+    
+    // Initialize inventory tables
+    const { initializeInventoryTable } = require('./inventory');
+    await initializeInventoryTable();
+    
   } catch (err) {
     console.error('❌ Database initialization error:', err);
   }

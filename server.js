@@ -139,6 +139,175 @@ app.get('/api/db-status', async (req, res) => {
   }
 });
 
+// Import inventory functions
+const {
+  getAllInventoryItems,
+  getInventoryItemById,
+  createInventoryItem,
+  updateInventoryItem,
+  deleteInventoryItem,
+  deleteMultipleInventoryItems,
+  getAllCategories,
+  getAllWarehouses,
+  getInventoryStats,
+  updateItemQuantity
+} = require('./inventory');
+
+// Inventory API endpoints
+
+// Get all inventory items with optional filters
+app.get('/api/inventory', requireAuth, async (req, res) => {
+  try {
+    const filters = {
+      search: req.query.search,
+      category: req.query.category,
+      status: req.query.status,
+      warehouse: req.query.warehouse
+    };
+    
+    const items = await getAllInventoryItems(filters);
+    res.json({ success: true, data: items });
+  } catch (error) {
+    console.error('Error fetching inventory items:', error);
+    res.status(500).json({ success: false, message: 'Failed to fetch inventory items' });
+  }
+});
+
+// Get inventory item by ID
+app.get('/api/inventory/:id', requireAuth, async (req, res) => {
+  try {
+    const item = await getInventoryItemById(req.params.id);
+    if (!item) {
+      return res.status(404).json({ success: false, message: 'Item not found' });
+    }
+    res.json({ success: true, data: item });
+  } catch (error) {
+    console.error('Error fetching inventory item:', error);
+    res.status(500).json({ success: false, message: 'Failed to fetch inventory item' });
+  }
+});
+
+// Create new inventory item
+app.post('/api/inventory', requireAuth, async (req, res) => {
+  try {
+    const item = await createInventoryItem(req.body);
+    res.status(201).json({ success: true, data: item, message: 'Item created successfully' });
+  } catch (error) {
+    console.error('Error creating inventory item:', error);
+    if (error.code === '23505') { // Unique constraint violation
+      res.status(400).json({ success: false, message: 'Item code already exists' });
+    } else {
+      res.status(500).json({ success: false, message: 'Failed to create inventory item' });
+    }
+  }
+});
+
+// Update inventory item
+app.put('/api/inventory/:id', requireAuth, async (req, res) => {
+  try {
+    const item = await updateInventoryItem(req.params.id, req.body);
+    if (!item) {
+      return res.status(404).json({ success: false, message: 'Item not found' });
+    }
+    res.json({ success: true, data: item, message: 'Item updated successfully' });
+  } catch (error) {
+    console.error('Error updating inventory item:', error);
+    if (error.code === '23505') { // Unique constraint violation
+      res.status(400).json({ success: false, message: 'Item code already exists' });
+    } else {
+      res.status(500).json({ success: false, message: 'Failed to update inventory item' });
+    }
+  }
+});
+
+// Delete inventory item
+app.delete('/api/inventory/:id', requireAuth, async (req, res) => {
+  try {
+    const item = await deleteInventoryItem(req.params.id);
+    if (!item) {
+      return res.status(404).json({ success: false, message: 'Item not found' });
+    }
+    res.json({ success: true, message: 'Item deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting inventory item:', error);
+    res.status(500).json({ success: false, message: 'Failed to delete inventory item' });
+  }
+});
+
+// Delete multiple inventory items
+app.delete('/api/inventory', requireAuth, async (req, res) => {
+  try {
+    const { ids } = req.body;
+    if (!ids || !Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).json({ success: false, message: 'Invalid or empty IDs array' });
+    }
+    
+    const deletedItems = await deleteMultipleInventoryItems(ids);
+    res.json({ 
+      success: true, 
+      message: `${deletedItems.length} item(s) deleted successfully`,
+      deletedCount: deletedItems.length
+    });
+  } catch (error) {
+    console.error('Error deleting multiple inventory items:', error);
+    res.status(500).json({ success: false, message: 'Failed to delete inventory items' });
+  }
+});
+
+// Update item quantity
+app.patch('/api/inventory/:id/quantity', requireAuth, async (req, res) => {
+  try {
+    const { quantity, operation = 'set' } = req.body;
+    
+    if (quantity === undefined || quantity < 0) {
+      return res.status(400).json({ success: false, message: 'Invalid quantity value' });
+    }
+    
+    const item = await updateItemQuantity(req.params.id, quantity, operation);
+    if (!item) {
+      return res.status(404).json({ success: false, message: 'Item not found' });
+    }
+    
+    res.json({ success: true, data: item, message: 'Quantity updated successfully' });
+  } catch (error) {
+    console.error('Error updating item quantity:', error);
+    res.status(500).json({ success: false, message: 'Failed to update item quantity' });
+  }
+});
+
+// Get all categories
+app.get('/api/categories', requireAuth, async (req, res) => {
+  try {
+    const categories = await getAllCategories();
+    res.json({ success: true, data: categories });
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+    res.status(500).json({ success: false, message: 'Failed to fetch categories' });
+  }
+});
+
+// Get all warehouses
+app.get('/api/warehouses', requireAuth, async (req, res) => {
+  try {
+    const warehouses = await getAllWarehouses();
+    res.json({ success: true, data: warehouses });
+  } catch (error) {
+    console.error('Error fetching warehouses:', error);
+    res.status(500).json({ success: false, message: 'Failed to fetch warehouses' });
+  }
+});
+
+// Get inventory statistics
+app.get('/api/inventory/stats', requireAuth, async (req, res) => {
+  try {
+    const stats = await getInventoryStats();
+    res.json({ success: true, data: stats });
+  } catch (error) {
+    console.error('Error fetching inventory stats:', error);
+    res.status(500).json({ success: false, message: 'Failed to fetch inventory statistics' });
+  }
+});
+
 // Initialize database and start server
 const startServer = async () => {
   try {
