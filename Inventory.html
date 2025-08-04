@@ -442,35 +442,16 @@
       <div class="nav-item dropdown me-3">
         <a class="nav-link position-relative" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
           <i class="bi bi-bell fs-5"></i>
-          <span class="notification-badge" id="notificationCount">3</span>
+                        <span class="notification-badge" id="notificationCount" style="display: none;">0</span>
         </a>
         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown" style="width: 320px;">
           <div class="d-flex justify-content-between align-items-center px-3 py-2 border-bottom">
             <h6 class="mb-0">Notifications</h6>
             <button class="btn btn-sm btn-link text-primary p-0" onclick="markAllAsRead()">Mark all as read</button>
           </div>
-          <div class="notification-list" style="max-height: 300px; overflow-y: auto;">
-            <div class="notification-item notification-unread" data-id="1">
-              <div class="notification-title">Low Stock Alert</div>
-              <div class="notification-text">USB Cable quantity is below minimum threshold (8 remaining)</div>
-              <div class="notification-time">2 minutes ago</div>
+                      <div class="notification-list" style="max-height: 300px; overflow-y: auto;" id="notificationList">
+              <!-- Notifications will be loaded dynamically from database -->
             </div>
-            <div class="notification-item notification-unread" data-id="2">
-              <div class="notification-title">New Item Added</div>
-              <div class="notification-text">Wireless Earphone has been added to inventory</div>
-              <div class="notification-time">1 hour ago</div>
-            </div>
-            <div class="notification-item notification-unread" data-id="3">
-              <div class="notification-title">Price Update</div>
-              <div class="notification-text">Buy price updated for item ITM001</div>
-              <div class="notification-time">3 hours ago</div>
-            </div>
-            <div class="notification-item" data-id="4">
-              <div class="notification-title">System Backup</div>
-              <div class="notification-text">Daily backup completed successfully</div>
-              <div class="notification-time">1 day ago</div>
-            </div>
-          </div>
           <div class="text-center py-2 border-top">
             <a href="#" class="btn btn-sm btn-link">View all notifications</a>
           </div>
@@ -481,34 +462,15 @@
       <div class="nav-item dropdown me-3">
         <a class="nav-link position-relative" href="#" id="messageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
           <i class="bi bi-chat-dots fs-5"></i>
-          <span class="notification-badge" style="background-color: var(--success-color);">2</span>
+                      <span class="notification-badge" id="messageCount" style="background-color: var(--success-color); display: none;">0</span>
         </a>
         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="messageDropdown" style="width: 300px;">
           <div class="d-flex justify-content-between align-items-center px-3 py-2 border-bottom">
             <h6 class="mb-0">Messages</h6>
             <a href="#" class="btn btn-sm btn-link text-primary p-0">View all</a>
           </div>
-          <div class="notification-list" style="max-height: 250px; overflow-y: auto;">
-            <div class="notification-item">
-              <div class="d-flex align-items-center">
-                <div class="user-avatar me-2" style="width: 24px; height: 24px; font-size: 0.7rem;">JD</div>
-                <div class="flex-grow-1">
-                  <div class="notification-title">John Doe</div>
-                  <div class="notification-text">Can you check the inventory levels for electronics?</div>
-                  <div class="notification-time">5 minutes ago</div>
-                </div>
-              </div>
-            </div>
-            <div class="notification-item">
-              <div class="d-flex align-items-center">
-                <div class="user-avatar me-2" style="width: 24px; height: 24px; font-size: 0.7rem;">SM</div>
-                <div class="flex-grow-1">
-                  <div class="notification-title">Sarah Miller</div>
-                  <div class="notification-text">New shipment arrived at warehouse WH001</div>
-                  <div class="notification-time">1 hour ago</div>
-                </div>
-              </div>
-            </div>
+          <div class="notification-list" style="max-height: 250px; overflow-y: auto;" id="messageList">
+            <!-- Messages will be loaded dynamically from database -->
           </div>
         </div>
       </div>
@@ -638,7 +600,7 @@
       <div class="inventory-card">
         <div class="d-flex justify-content-between align-items-center mb-3">
           <h5><i class="bi bi-box-seam me-2"></i>Items</h5>
-          <small class="text-muted">Total Items: <span id="totalItems">2</span></small>
+          <small class="text-muted">Total Items: <span id="totalItems">0</span></small>
         </div>
         <div class="table-container">
           <div class="table-responsive">
@@ -662,46 +624,7 @@
                 </tr>
               </thead>
               <tbody id="inventoryTableBody">
-                <tr data-id="1">
-                  <td><input type="checkbox" class="item-checkbox" value="1"></td>
-                  <td>ITM001</td>
-                  <td>Wireless Earphone</td>
-                  <td>000001</td>
-                  <td>PCS</td>
-                  <td>₱250.00</td>
-                  <td>₱350.00</td>
-                  <td>Philippines</td>
-                  <td>CAT001</td>
-                  <td><span class="status-badge status-active">Active</span></td>
-                  <td>WH001</td>
-                  <td>15</td>
-                  <td>2024-01-15</td>
-                  <td class="item-actions">
-                    <i class="bi bi-star" title="Favorite" onclick="toggleFavorite(1)"></i>
-                    <i class="bi bi-pencil" title="Edit" onclick="editItem(1)"></i>
-                    <i class="bi bi-trash" title="Delete" onclick="deleteItem(1)"></i>
-                  </td>
-                </tr>
-                <tr data-id="2">
-                  <td><input type="checkbox" class="item-checkbox" value="2"></td>
-                  <td>ITM002</td>
-                  <td>USB Cable</td>
-                  <td>000002</td>
-                  <td>PCS</td>
-                  <td>₱50.00</td>
-                  <td>₱75.00</td>
-                  <td>Philippines</td>
-                  <td>CAT002</td>
-                  <td><span class="status-badge status-inactive">Inactive</span></td>
-                  <td>WH002</td>
-                  <td>8</td>
-                  <td>2024-01-14</td>
-                  <td class="item-actions">
-                    <i class="bi bi-star" title="Favorite" onclick="toggleFavorite(2)"></i>
-                    <i class="bi bi-pencil" title="Edit" onclick="editItem(2)"></i>
-                    <i class="bi bi-trash" title="Delete" onclick="deleteItem(2)"></i>
-                  </td>
-                </tr>
+                <!-- Inventory data will be loaded dynamically from database -->
               </tbody>
             </table>
           </div>
@@ -1027,44 +950,116 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 // Global variables
-let inventoryData = [
-  {
-    id: 1,
-    itemCode: 'ITM001',
-    productName: 'Wireless Earphone',
-    unitOfMeasure: 'PCS',
-    buyPrice: 250.00,
-    sellPrice: 350.00,
-    location: 'Philippines',
-    categoryId: 'CAT001',
-    status: 'active',
-    warehouseId: 'WH001',
-    totalQuantity: 15,
-    updatedAt: '2024-01-15'
-  },
-  {
-    id: 2,
-    itemCode: 'ITM002',
-    productName: 'USB Cable',
-    unitOfMeasure: 'PCS',
-    buyPrice: 50.00,
-    sellPrice: 75.00,
-    location: 'Philippines',
-    categoryId: 'CAT002',
-    status: 'inactive',
-    warehouseId: 'WH002',
-    totalQuantity: 8,
-    updatedAt: '2024-01-14'
-  }
-];
-
-let nextId = 3;
+let inventoryData = [];
+let categoriesData = [];
+let warehousesData = [];
+let nextId = 1;
 let currentEditId = null;
+
+// API Functions
+async function fetchInventoryData() {
+  try {
+    const response = await fetch('/api/inventory');
+    const result = await response.json();
+    if (result.success) {
+      inventoryData = result.data;
+      renderTable();
+      updateTotalItems();
+    }
+  } catch (error) {
+    console.error('Error fetching inventory:', error);
+    showNotification('Error', 'Failed to load inventory data', 'error');
+  }
+}
+
+async function fetchCategoriesAndWarehouses() {
+  try {
+    const [categoriesResponse, warehousesResponse] = await Promise.all([
+      fetch('/api/categories'),
+      fetch('/api/warehouses')
+    ]);
+    
+    const categoriesResult = await categoriesResponse.json();
+    const warehousesResult = await warehousesResponse.json();
+    
+    if (categoriesResult.success) {
+      categoriesData = categoriesResult.data;
+      populateCategoryOptions();
+    }
+    
+    if (warehousesResult.success) {
+      warehousesData = warehousesResult.data;
+      populateWarehouseOptions();
+    }
+  } catch (error) {
+    console.error('Error fetching categories/warehouses:', error);
+  }
+}
+
+async function fetchNotifications() {
+  try {
+    const response = await fetch('/api/notifications');
+    const result = await response.json();
+    if (result.success) {
+      renderNotifications(result.data);
+    }
+  } catch (error) {
+    console.error('Error fetching notifications:', error);
+  }
+}
+
+async function fetchMessages() {
+  try {
+    const response = await fetch('/api/messages');
+    const result = await response.json();
+    if (result.success) {
+      renderMessages(result.data);
+    }
+  } catch (error) {
+    console.error('Error fetching messages:', error);
+  }
+}
+
+function populateCategoryOptions() {
+  const categorySelects = document.querySelectorAll('#categoryFilter, #categoryId');
+  categorySelects.forEach(select => {
+    // Clear existing options except the first one
+    while (select.children.length > 1) {
+      select.removeChild(select.lastChild);
+    }
+    
+    categoriesData.forEach(category => {
+      const option = document.createElement('option');
+      option.value = category.id;
+      option.textContent = category.name;
+      select.appendChild(option);
+    });
+  });
+}
+
+function populateWarehouseOptions() {
+  const warehouseSelects = document.querySelectorAll('#warehouseFilter, #warehouseId');
+  warehouseSelects.forEach(select => {
+    // Clear existing options except the first one
+    while (select.children.length > 1) {
+      select.removeChild(select.lastChild);
+    }
+    
+    warehousesData.forEach(warehouse => {
+      const option = document.createElement('option');
+      option.value = warehouse.id;
+      option.textContent = `${warehouse.id} - ${warehouse.name}`;
+      select.appendChild(option);
+    });
+  });
+}
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
-  renderTable();
-  updateTotalItems();
+  fetchInventoryData();
+  fetchCategoriesAndWarehouses();
+  fetchNotifications();
+  fetchMessages();
 });
 
 // CRUD Operations
@@ -1096,22 +1091,22 @@ function editItem(id) {
   currentEditId = id;
   document.getElementById('modalTitle').textContent = 'Update Item';
   
-  // Populate form fields
-  document.getElementById('itemCode').value = item.itemCode;
-  document.getElementById('productName').value = item.productName;
-  document.getElementById('unitOfMeasure').value = item.unitOfMeasure;
-  document.getElementById('buyPrice').value = item.buyPrice;
-  document.getElementById('sellPrice').value = item.sellPrice;
+  // Populate form fields (handle both snake_case and camelCase for compatibility)
+  document.getElementById('itemCode').value = item.item_code || item.itemCode;
+  document.getElementById('productName').value = item.product_name || item.productName;
+  document.getElementById('unitOfMeasure').value = item.unit_of_measure || item.unitOfMeasure;
+  document.getElementById('buyPrice').value = item.buy_price || item.buyPrice;
+  document.getElementById('sellPrice').value = item.sell_price || item.sellPrice || '';
   document.getElementById('location').value = item.location;
-  document.getElementById('categoryId').value = item.categoryId;
+  document.getElementById('categoryId').value = item.category_id || item.categoryId || '';
   document.getElementById('status').value = item.status;
-  document.getElementById('warehouseId').value = item.warehouseId;
-  document.getElementById('totalQuantity').value = item.totalQuantity;
+  document.getElementById('warehouseId').value = item.warehouse_id || item.warehouseId || '';
+  document.getElementById('totalQuantity').value = item.total_quantity || item.totalQuantity;
   
   new bootstrap.Modal(document.getElementById('itemModal')).show();
 }
 
-function saveItem() {
+async function saveItem() {
   const form = document.getElementById('itemForm');
   if (!form.checkValidity()) {
     form.reportValidity();
@@ -1123,41 +1118,76 @@ function saveItem() {
     productName: document.getElementById('productName').value,
     unitOfMeasure: document.getElementById('unitOfMeasure').value,
     buyPrice: parseFloat(document.getElementById('buyPrice').value),
-    sellPrice: parseFloat(document.getElementById('sellPrice').value) || 0,
+    sellPrice: parseFloat(document.getElementById('sellPrice').value) || null,
     location: document.getElementById('location').value,
-    categoryId: document.getElementById('categoryId').value,
+    categoryId: document.getElementById('categoryId').value || null,
     status: document.getElementById('status').value,
-    warehouseId: document.getElementById('warehouseId').value,
-    totalQuantity: parseInt(document.getElementById('totalQuantity').value),
-    updatedAt: new Date().toISOString().split('T')[0]
+    warehouseId: document.getElementById('warehouseId').value || null,
+    totalQuantity: parseInt(document.getElementById('totalQuantity').value)
   };
   
-  if (currentEditId) {
-    // Update existing item
-    const index = inventoryData.findIndex(item => item.id == currentEditId);
-    if (index !== -1) {
-      inventoryData[index] = { ...inventoryData[index], ...itemData };
+  try {
+    let response;
+    if (currentEditId) {
+      // Update existing item
+      response = await fetch(`/api/inventory/${currentEditId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(itemData)
+      });
+    } else {
+      // Add new item
+      response = await fetch('/api/inventory', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(itemData)
+      });
     }
-  } else {
-    // Insert new item
-    itemData.id = nextId++;
-    inventoryData.push(itemData);
+    
+    const result = await response.json();
+    if (result.success) {
+      await fetchInventoryData(); // Refresh the data
+      await fetchNotifications(); // Refresh notifications
+      bootstrap.Modal.getInstance(document.getElementById('itemModal')).hide();
+      currentEditId = null;
+      form.reset();
+      showNotification('Success', currentEditId ? 'Item updated successfully' : 'Item added successfully', 'success');
+    } else {
+      showNotification('Error', result.message || 'Failed to save item', 'error');
+    }
+  } catch (error) {
+    console.error('Error saving item:', error);
+    showNotification('Error', 'Failed to save item', 'error');
   }
-  
-  renderTable();
-  updateTotalItems();
-  bootstrap.Modal.getInstance(document.getElementById('itemModal')).hide();
 }
 
-function deleteItem(id) {
+async function deleteItem(id) {
   if (confirm('Are you sure you want to delete this item?')) {
-    inventoryData = inventoryData.filter(item => item.id !== id);
-    renderTable();
-    updateTotalItems();
+    try {
+      const response = await fetch(`/api/inventory/${id}`, {
+        method: 'DELETE'
+      });
+      
+      const result = await response.json();
+      if (result.success) {
+        await fetchInventoryData(); // Refresh the data
+        await fetchNotifications(); // Refresh notifications
+        showNotification('Success', 'Item deleted successfully', 'success');
+      } else {
+        showNotification('Error', result.message || 'Failed to delete item', 'error');
+      }
+    } catch (error) {
+      console.error('Error deleting item:', error);
+      showNotification('Error', 'Failed to delete item', 'error');
+    }
   }
 }
 
-function deleteSelected() {
+async function deleteSelected() {
   const selectedItems = getSelectedItems();
   if (selectedItems.length === 0) {
     alert('Please select items to delete.');
@@ -1165,9 +1195,27 @@ function deleteSelected() {
   }
   
   if (confirm(`Are you sure you want to delete ${selectedItems.length} item(s)?`)) {
-    inventoryData = inventoryData.filter(item => !selectedItems.includes(item.id));
-    renderTable();
-    updateTotalItems();
+    try {
+      const response = await fetch('/api/inventory', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ ids: selectedItems })
+      });
+      
+      const result = await response.json();
+      if (result.success) {
+        await fetchInventoryData(); // Refresh the data
+        await fetchNotifications(); // Refresh notifications
+        showNotification('Success', `${result.deletedCount} item(s) deleted successfully`, 'success');
+      } else {
+        showNotification('Error', result.message || 'Failed to delete items', 'error');
+      }
+    } catch (error) {
+      console.error('Error deleting items:', error);
+      showNotification('Error', 'Failed to delete items', 'error');
+    }
   }
 }
 
@@ -1220,16 +1268,21 @@ function searchItems() {
   
   // Apply search filter
   if (searchTerm) {
-    filteredData = filteredData.filter(item => 
-      item.productName.toLowerCase().includes(searchTerm) ||
-      item.itemCode.toLowerCase().includes(searchTerm) ||
-      item.id.toString().includes(searchTerm)
-    );
+    filteredData = filteredData.filter(item => {
+      const productName = item.product_name || item.productName || '';
+      const itemCode = item.item_code || item.itemCode || '';
+      return productName.toLowerCase().includes(searchTerm) ||
+             itemCode.toLowerCase().includes(searchTerm) ||
+             item.id.toString().includes(searchTerm);
+    });
   }
   
   // Apply category filter
   if (categoryFilter) {
-    filteredData = filteredData.filter(item => item.categoryId === categoryFilter);
+    filteredData = filteredData.filter(item => {
+      const categoryId = item.category_id || item.categoryId;
+      return categoryId === categoryFilter;
+    });
   }
   
   // Apply status filter
@@ -1239,7 +1292,10 @@ function searchItems() {
   
   // Apply warehouse filter
   if (warehouseFilter) {
-    filteredData = filteredData.filter(item => item.warehouseId === warehouseFilter);
+    filteredData = filteredData.filter(item => {
+      const warehouseId = item.warehouse_id || item.warehouseId;
+      return warehouseId === warehouseFilter;
+    });
   }
   
   renderTable(filteredData);
@@ -1259,20 +1315,32 @@ function renderTable(data = inventoryData) {
   data.forEach(item => {
     const row = document.createElement('tr');
     row.setAttribute('data-id', item.id);
+    
+    // Handle both snake_case (database) and camelCase (legacy) field names
+    const itemCode = item.item_code || item.itemCode;
+    const productName = item.product_name || item.productName;
+    const unitOfMeasure = item.unit_of_measure || item.unitOfMeasure;
+    const buyPrice = item.buy_price || item.buyPrice;
+    const sellPrice = item.sell_price || item.sellPrice || 0;
+    const categoryId = item.category_id || item.categoryId || '';
+    const warehouseId = item.warehouse_id || item.warehouseId || '';
+    const totalQuantity = item.total_quantity || item.totalQuantity;
+    const updatedAt = item.updated_at ? new Date(item.updated_at).toLocaleDateString() : (item.updatedAt || '');
+    
     row.innerHTML = `
       <td><input type="checkbox" class="item-checkbox" value="${item.id}"></td>
-      <td>${item.itemCode}</td>
-      <td>${item.productName}</td>
+      <td>${itemCode}</td>
+      <td>${productName}</td>
       <td>${String(item.id).padStart(6, '0')}</td>
-      <td>${item.unitOfMeasure}</td>
-      <td>₱${item.buyPrice.toFixed(2)}</td>
-      <td>₱${item.sellPrice.toFixed(2)}</td>
+      <td>${unitOfMeasure}</td>
+      <td>₱${Number(buyPrice).toFixed(2)}</td>
+      <td>₱${Number(sellPrice).toFixed(2)}</td>
       <td>${item.location}</td>
-      <td>${item.categoryId}</td>
-      <td><span class="status-badge status-${item.status}">${item.status.toUpperCase()}</span></td>
-      <td>${item.warehouseId}</td>
-      <td>${item.totalQuantity}</td>
-      <td>${item.updatedAt}</td>
+      <td>${categoryId}</td>
+      <td><span class="status-badge status-${item.status}">${item.status.charAt(0).toUpperCase() + item.status.slice(1)}</span></td>
+      <td>${warehouseId}</td>
+      <td>${totalQuantity}</td>
+      <td>${updatedAt}</td>
       <td class="item-actions">
         <i class="bi bi-star" title="Favorite" onclick="toggleFavorite(${item.id})"></i>
         <i class="bi bi-pencil" title="Edit" onclick="editItem(${item.id})"></i>
@@ -1288,6 +1356,93 @@ function renderTable(data = inventoryData) {
 
 function updateTotalItems() {
   document.getElementById('totalItems').textContent = inventoryData.length;
+}
+
+// Notification and Message rendering functions
+function renderNotifications(notifications) {
+  const notificationList = document.getElementById('notificationList');
+  const notificationCount = document.getElementById('notificationCount');
+  
+  if (notifications.length === 0) {
+    notificationList.innerHTML = '<div class="text-center text-muted py-3">No notifications</div>';
+    notificationCount.style.display = 'none';
+    return;
+  }
+  
+  const unreadCount = notifications.filter(n => !n.is_read).length;
+  
+  notificationList.innerHTML = notifications.map(notification => `
+    <div class="notification-item ${!notification.is_read ? 'notification-unread' : ''}" data-id="${notification.id}">
+      <div class="notification-title">${notification.title}</div>
+      <div class="notification-text">${notification.message}</div>
+      <div class="notification-time">${formatTimeAgo(notification.created_at)}</div>
+    </div>
+  `).join('');
+  
+  if (unreadCount > 0) {
+    notificationCount.textContent = unreadCount;
+    notificationCount.style.display = 'flex';
+  } else {
+    notificationCount.style.display = 'none';
+  }
+}
+
+function renderMessages(messages) {
+  const messageList = document.getElementById('messageList');
+  const messageCount = document.getElementById('messageCount');
+  
+  if (messages.length === 0) {
+    messageList.innerHTML = '<div class="text-center text-muted py-3">No messages</div>';
+    messageCount.style.display = 'none';
+    return;
+  }
+  
+  const unreadCount = messages.filter(m => !m.is_read).length;
+  
+  messageList.innerHTML = messages.map(message => {
+    const initials = message.sender_name.split(' ').map(n => n[0]).join('').toUpperCase();
+    return `
+      <div class="notification-item">
+        <div class="d-flex align-items-center">
+          <div class="user-avatar me-2" style="width: 24px; height: 24px; font-size: 0.7rem;">${initials}</div>
+          <div class="flex-grow-1">
+            <div class="notification-title">${message.sender_name}</div>
+            <div class="notification-text">${message.message_text}</div>
+            <div class="notification-time">${formatTimeAgo(message.created_at)}</div>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+  
+  if (unreadCount > 0) {
+    messageCount.textContent = unreadCount;
+    messageCount.style.display = 'flex';
+  } else {
+    messageCount.style.display = 'none';
+  }
+}
+
+function formatTimeAgo(dateString) {
+  const now = new Date();
+  const date = new Date(dateString);
+  const diffInMinutes = Math.floor((now - date) / (1000 * 60));
+  
+  if (diffInMinutes < 1) return 'Just now';
+  if (diffInMinutes < 60) return `${diffInMinutes} minutes ago`;
+  
+  const diffInHours = Math.floor(diffInMinutes / 60);
+  if (diffInHours < 24) return `${diffInHours} hours ago`;
+  
+  const diffInDays = Math.floor(diffInHours / 24);
+  if (diffInDays < 7) return `${diffInDays} days ago`;
+  
+  return date.toLocaleDateString();
+}
+
+function showNotification(title, message, type = 'info') {
+  // You can implement a toast notification system here
+  console.log(`${type.toUpperCase()}: ${title} - ${message}`);
 }
 
 // Top Navigation Functions
@@ -1350,18 +1505,23 @@ function logout() {
 }
 
 // Notification functions
-function markAllAsRead() {
-  const unreadNotifications = document.querySelectorAll('.notification-unread');
-  unreadNotifications.forEach(notification => {
-    notification.classList.remove('notification-unread');
-  });
-  
-  // Update notification count
-  const notificationCount = document.getElementById('notificationCount');
-  notificationCount.textContent = '0';
-  notificationCount.style.display = 'none';
-  
-  alert('All notifications marked as read');
+async function markAllAsRead() {
+  try {
+    const response = await fetch('/api/notifications/mark-read', {
+      method: 'PUT'
+    });
+    
+    const result = await response.json();
+    if (result.success) {
+      await fetchNotifications(); // Refresh notifications
+      showNotification('Success', 'All notifications marked as read', 'success');
+    } else {
+      showNotification('Error', result.message || 'Failed to mark notifications as read', 'error');
+    }
+  } catch (error) {
+    console.error('Error marking notifications as read:', error);
+    showNotification('Error', 'Failed to mark notifications as read', 'error');
+  }
 }
 
 // Top search functionality
